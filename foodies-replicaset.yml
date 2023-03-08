@@ -10,30 +10,31 @@ spec:
     matchLabels:
       app: foodies
       version: "1.0"
-template:
-  metadata:
-    labels:
-      app: foodies
-      version: "1.0"
-  spec:
-    contaier: 
-      - name: foodiescontaier
-        image: mgmbcssantosh86/foodies:1.0
-        ports: 
-          - name: tomcatport
-            contaierPort: 8080
-            protocol: TCP
-        readnessProbe:
-          httpGet:
-            path: /foodies/actuator/health/readiness
-            port: 8080
-          initialDelaySeconds: 15
-          timeoutSeconds: 15
-          failureThreshold: 3
-        livenessProbe:
-          httpGet:
-            path: /foodies/actuator/health/liveness
-            port: 8080
-          initialDelaySeconds: 15
-          timeoutSeconds: 15
-          failureThreshold: 3
+  template:
+    metadata:
+      labels:
+        app: foodies
+        version: "1.0"
+    spec:
+      containers:
+        - name: foodies
+          image: mgmbcssantosh86/foodies:1.0
+          ports:
+            - name: tomcatport
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /foodies/actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /foodies/actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            failureThreshold: 3
+
